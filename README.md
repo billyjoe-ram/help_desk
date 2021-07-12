@@ -7,6 +7,14 @@ Escolhi, dessa vez, manter a maioria dos arquivos e códigos em português para 
 
 Aceito qualquer sugestão de como melhorar o projeto! :)
 
+# Banco de Dados
+Para este projeto, a sintaxe de comandos SQL usados foram voltados para o banco escolhido (MySQL), mas como o método de comunicação utilizado é o PDO, caso seja do seu interesse migrar meu projeto para outros banco de dados relacionais, o processo será simples.
+
+Cada model é baseado no jeito que EU pensei o banco de dados, considerando que a aplicação inicial não usa banco de dados SQL. Caso seja interessante para você, modele seu banco e crie seus arquivos de models personalizados.
+
+Eu não implementei uma funcionalidade para criar usuários porque o intuíto é autenticação
+de usuários já existentes e maior foco nos chamados em si. Sinta-se livre para puxar o repositório, criar seus usuários e implementar essa funcionalidade com regras de negócio e métodos de segurança *OU* faça que nem eu e crie alguns usuários de teste no seu banco de dados.
+
 # Códigos de erro / retorno
 
 1. OK - Tudo ok. Usuário existe e foi autenticado;
@@ -19,3 +27,6 @@ Aceito qualquer sugestão de como melhorar o projeto! :)
 
 # Sobre o autor
 Sou um programador apaixonado por desenvolvimento web, onde venho me especializando, mas  especificamente às tecnologias voltadas para *frontend*. Sou movido por desafios, adoro maratonas de programação, estudar arquitetura de computadores e ler livros livros, MUUUUUITOS livros.
+
+# Créditos
+Crédito à Jorge Sant Ana e Jamilton Damasceno.

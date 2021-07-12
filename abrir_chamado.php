@@ -29,15 +29,21 @@
               <div class="row">
                 <div class="col">
                   
-                  <form>
+                  <form action="./services/registra_chamado.php" method="post">
                     <div class="form-group">
-                      <label>Título</label>
-                      <input type="text" class="form-control" placeholder="Título">
+                      <label for="titulo">Título</label>
+                      <input
+                        type="text"
+                        name="titulo"
+                        id="titulo"
+                        class="form-control"
+                        placeholder="Título"
+                      >
                     </div>
                     
                     <div class="form-group">
-                      <label>Categoria</label>
-                      <select class="form-control">
+                      <label for="categoria">Categoria</label>
+                      <select class="form-control" name="categoria" id="categoria">
                         <option>Criação Usuário</option>
                         <option>Impressora</option>
                         <option>Hardware</option>
@@ -47,8 +53,10 @@
                     </div>
                     
                     <div class="form-group">
-                      <label>Descrição</label>
+                      <label for="descricao">Descrição</label>
                       <textarea
+                        name="descricao"
+                        id="descricao"
                         class="form-control"
                         rows="3"
                         style="resize: none;"
@@ -68,14 +76,13 @@
                       </div>
 
                       <div class="col-6">
-                        <a href="#" style="text-decoration: none;">
                           <button
+                            name="enviar"
                             class="btn btn-lg btn-info btn-block"
-                            type="button"
+                            type="submit"
                           >
                             Abrir                          
                           </button>
-                        </a>
                       </div>
                     </div>
                   </form>
