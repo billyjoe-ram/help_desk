@@ -1,7 +1,7 @@
 <?php
 
     class Chamado {
-        private $ds_titulo;
+        private $nm_titulo;
         private $ds_categoria;
         private $ds_chamado;
         private $dt_chamado;

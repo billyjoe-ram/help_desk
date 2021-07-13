@@ -2,6 +2,22 @@
   // Requerindo o script de verificação de autenticação
 
   require_once './services/valida_acesso.php';
+
+  require_once './private/db_conn.php';
+
+  require_once './private/chamado.model.php';
+
+  require_once './private/chamado.service.php';
+
+  // Instanciando conexao
+  $db_conn = new DbConn();
+
+  // Instanciando classe requerida
+  $chamado = new Chamado();
+
+  $chamado_service = new ChamadoService($db_conn, $chamado);
+
+  $todosChamados = $chamado_service->recuperarChamados();
 ?>
 
 <html>
@@ -27,24 +43,26 @@
             </div>
             
             <div class="card-body">
-              
-              <div class="card mb-3 bg-light">
-                <div class="card-body">
-                  <h5 class="card-title">Título do chamado...</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">Categoria</h6>
-                  <p class="card-text">Descrição do chamado...</p>
-
+              <?php
+                // Iterando para cada chamado na lista de chamados
+                // Foreach fechando na linha 64
+                foreach($todosChamados as $chamado) {
+                
+              ?>
+                <div class="card mb-3 bg-light">
+                  <div class="card-body">
+                    <h5 class="card-title"><?= $chamado['nm_titulo'] ?></h5>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                      <?= $chamado['ds_categoria'] ?>
+                    </h6>
+                    <p class="card-text">
+                      <?= $chamado['ds_chamado'] ?>
+                    </p>
+                  </div>
                 </div>
-              </div>
-
-              <div class="card mb-3 bg-light">
-                <div class="card-body">
-                  <h5 class="card-title">Título do chamado...</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">Categoria</h6>
-                  <p class="card-text">Descrição do chamado...</p>
-
-                </div>
-              </div>
+              <?php
+                }                              
+              ?>
 
               <div class="row mt-5">
                 <div class="col-6">

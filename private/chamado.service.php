@@ -12,10 +12,12 @@ class ChamadoService {
 
     public function abrirChamado() {
         $query = "insert into tb_chamados(
+            nm_titulo
             ds_categoria,
             ds_chamado,
             dt_chamado
             ) values(
+                :nm_titulo,
                 :ds_categoria,
                 :ds_chamado,
                 :dt_chamado
@@ -23,6 +25,7 @@ class ChamadoService {
         // Statement
         $stmt = $this->conexao->prepare($query);        
 
+        $stmt->bindValue(":nm_titulo", $this->chamado->__get("nm_titulo"));
         $stmt->bindValue(":ds_categoria", $this->chamado->__get("ds_categoria"));
         $stmt->bindValue(":ds_chamado", $this->chamado->__get("ds_chamado"));
         $stmt->bindValue(":dt_chamado", $this->chamado->__get("dt_chamado"));
@@ -30,20 +33,17 @@ class ChamadoService {
         $stmt->execute();
     }
 
-    public function recuperarChamado() {
-        // $query = "
-        //     select t.id, sts.status, t.chamado
-        //         from tb_chamados as t
-        //     left join tb_status as sts
-        //         on (t.id_status = sts.id)
-        // ";
+    public function recuperarChamados() {
+        // *NÃO* use essa query, estou usando só para teste e porque o
+        // *MEU* banco de dados, não contém muitos registros!!!
+        $query = "select * from tb_chamados";
         // Preparando um statement com a query
-        // $stmt = $this->conexao->prepare($query);
+        $stmt = $this->conexao->prepare($query);
 
         // Executando PDOStatement
-        // $stmt->execute();
+        $stmt->execute();
         // Buscando todos como objeto
-        // return $stmt->fetchAll(PDO::FETCH_OBJ);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function atualizarChamado() {
