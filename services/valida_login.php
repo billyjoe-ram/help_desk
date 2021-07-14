@@ -70,6 +70,7 @@
         $status_envio = 'OK';
         
         $_SESSION['autenticado'] = true;
+        $_SESSION['email'] = $_POST['email'];
     } else {
         $_SESSION['autenticado'] = false;
     }
