@@ -40,39 +40,50 @@ class ChamadoService {
         // *MEU* banco de dados, não contém muitos registros!!!
         session_start();
 
-        $emailUsuario = $_SESSION['email'];        
+        $emailUsuario = $_SESSION['email'];
+        // Instanciando antes para reaproveitar escopo global
+        $stmtChamados = new PDOStatement();
 
-        $cdUsuarioQuery = "select cd_usuario from tb_usuarios where ds_email = :ds_email";
+        if (!$_SESSION['admin']) {
+            $cdUsuarioQuery = "select cd_usuario from tb_usuarios where ds_email = :ds_email";
 
-        $stmtUsuario = $this->conexao->prepare($cdUsuarioQuery);
+            $stmtUsuario = $this->conexao->prepare($cdUsuarioQuery);
 
-        $stmtUsuario->bindValue(":ds_email", $emailUsuario);
+            $stmtUsuario->bindValue(":ds_email", $emailUsuario);
 
-        $stmtUsuario->execute();
+            $stmtUsuario->execute();
 
-        $cdUsuario = $stmtUsuario->fetchAll(PDO::FETCH_ASSOC);
+            $cdUsuario = $stmtUsuario->fetchAll(PDO::FETCH_ASSOC);
 
-        // Estou em dúvida se devo destruir esse índice ou não
-        // unset($_SESSION['email']);
+            $arrTodosChamados = [];
 
-        // Verifica se existe um cd pra esse usuário
-        
-        if (count($cdUsuario)) {
-            $query = "select nm_titulo, ds_categoria, ds_chamado
-                from tb_chamados where cd_usuario = :cd_usuario";
+            // Estou em dúvida se devo destruir esse índice ou não
+            // unset($_SESSION['email']);
+
+            // Verifica se existe um cd pra esse usuário
+            
+            if (count($cdUsuario)) {
+                $query = "select nm_titulo, ds_categoria, ds_chamado
+                    from tb_chamados where cd_usuario = :cd_usuario";
+                // Preparando um statement com a query
+                $stmtChamados = $this->conexao->prepare($query);
+
+                // Pegando o usuário 
+                $stmtChamados->bindValue(":cd_usuario", $cdUsuario[0]['cd_usuario']);
+            }
+        } else {
+            // Seleciona TUDO caso seja admin
+            $query = "select nm_titulo, ds_categoria, ds_chamado from tb_chamados";
             // Preparando um statement com a query
             $stmtChamados = $this->conexao->prepare($query);
-
-            // Pegando o usuário 
-            $stmtChamados->bindValue(":cd_usuario", $cdUsuario[0]['cd_usuario']);
-
-            // Executando PDOStatement
-            $stmtChamados->execute();
-            // Buscando todos como objeto
-            return $stmtChamados->fetchAll(PDO::FETCH_ASSOC);
         }
-        // Caso não tenha achado o usuário, retorna null (porque não tem nada)
-        return null;
+
+        // Executando PDOStatement
+        $stmtChamados->execute();
+        // Buscando todos como objeto
+        $arrTodosChamados = $stmtChamados->fetchAll(PDO::FETCH_ASSOC);
+        
+        return $arrTodosChamados;
     }
 
     public function atualizarChamado() {

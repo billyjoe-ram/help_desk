@@ -1,15 +1,18 @@
 <?php
 
+    require '../private/usuario.model.php';
+
+    require '../private/usuario.service.php';
+
+    require '../private/chamado.service.php';
+
+    require '../private/db_conn.php';
+
     // Iniciando uma sessão
     session_start();
 
     // Usuários do sistema
-    // Só pra teste vai ficar salvo em um array assoc. (dict.)
-    $usuarios_app = [
-        ['email' => 'admin@admin.com', 'password' => 'administrator'],
-        ['email' => 'test@test.com', 'password' => 'testing!'],
-        ['email' => 'dev@dev.com', 'password' => 'developer'],
-    ];
+    // Só pra teste vai ficar salvo em um array assoc. (dict.)    
 
     $usuario_autenticado = false;
 
@@ -36,25 +39,15 @@
             // Iterando sobre os usuários do array e buscando esse cara
 
             if (strlen($email) >= 8 && strlen($password) >= 8) {
-                foreach($usuarios_app as $usuario) {
-                    if ($email == $usuario['email']) {
-                        // Estou fazendo essa verificação para dizer se a senha está errada ou
-                        // não
-                        if ($password == $usuario['password']) {
-                            $usuario_autenticado = true;
-                        } else {
-                            // Código de senha incorreta
-                            $status_envio = 'WNRPASS';
-                        }
+                // Instanciando conexao
+                $db_conn = new DbConn();
 
-                        // Terminando o foreach se achar, porque se o usuário buscado
-                        // for o primeiro do array, não vai dar certo, ele vai acabar false
-                        break;
-                    } else {
-                        $usuario_autenticado = false;
-                        $status_envio = 'UNOW';
-                    }
-                }
+                $usuarioService = new UsuarioService($db_conn);
+                $status_envio = $usuarioService->logarUsuario($email, $password);
+                // Defininado usuário admin ou não
+                $usuarioService->verificaAdmin($email, $password);
+
+                $status_envio == 'OK' ? $usuario_autenticado = true : $usuario_autenticado = false;
             } else {
                 $status_envio = 'FRML';
             }
@@ -67,8 +60,6 @@
 
     // Caso ele tenha passando em todas as verificações, enviar OK
     if ($usuario_autenticado) {
-        $status_envio = 'OK';
-        
         $_SESSION['autenticado'] = true;
         $_SESSION['email'] = $_POST['email'];
     } else {
@@ -78,4 +69,6 @@
     // Por fim, enviar pro index passando o status pra GET
     // * É necessário informar esse retorno porque ainda estou usando diretório, e 
     //  não rotas
+    
+    // die();
     header('Location: ../index.php?status=' . $status_envio);
