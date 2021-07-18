@@ -20,7 +20,7 @@
                         
             $dt_descricao = date('Ymd_His');
             
-            $chamado->__set('ds_titulo', $_POST['titulo']);
+            $chamado->__set('nm_titulo', $_POST['titulo']);
             $chamado->__set('ds_categoria', $_POST['categoria']);
             $chamado->__set('ds_chamado', $_POST['descricao']);
 
@@ -30,6 +30,6 @@
             
             $chamado_service->abrirChamado();
 
-            header('Location: ../abrir_chamado.php');
+            header('Location: ../consultar_chamado.php');
         }
     }

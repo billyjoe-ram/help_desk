@@ -11,28 +11,48 @@ class ChamadoService {
     }
 
     public function abrirChamado() {
-        $query = "insert into tb_chamados(
-            nm_titulo
-            ds_categoria,
-            ds_chamado,
-            dt_chamado,
-            cd_usuario
-            ) values(
-                :nm_titulo,
-                :ds_categoria,
-                :ds_chamado,
-                :cd_usuario,
-            )";
-        // Statement
-        $stmt = $this->conexao->prepare($query);        
+        session_start();
 
-        $stmt->bindValue(":nm_titulo", $this->chamado->__get("nm_titulo"));
-        $stmt->bindValue(":ds_categoria", $this->chamado->__get("ds_categoria"));
-        $stmt->bindValue(":ds_chamado", $this->chamado->__get("ds_chamado"));
-        $stmt->bindValue(":dt_chamado", $this->chamado->__get("dt_chamado"));
-        $stmt->bindValue(":cd_usuario", $this->chamado->__get("cd_usuario"));
+        // Caso esteja autenticado, abre, se não volta pra logar
+        if ($_SESSION['autenticado']) {
+            $queryCdUsuario = "select cd_usuario from tb_usuarios where ds_email = :ds_email";
 
-        $stmt->execute();
+            $stmtUsuario = $this->conexao->prepare($queryCdUsuario);
+
+            $stmtUsuario->bindValue((":ds_email"), $_SESSION['email']);
+
+            $stmtUsuario->execute();
+            
+            // Trazendo o código de usuário se estiver autenticado segundo o e-mail do usuário autenticado
+            $cdUsuarioRetorno = $stmtUsuario->fetchAll(PDO::FETCH_ASSOC);
+
+            $queryChamado = "insert into tb_chamados(
+                nm_titulo,
+                ds_categoria,
+                ds_chamado,
+                dt_chamado,
+                cd_usuario
+                ) values(
+                    :nm_titulo,
+                    :ds_categoria,
+                    :ds_chamado,
+                    :dt_chamado,
+                    :cd_usuario
+                )";
+            // Statement
+            $stmtChamado = $this->conexao->prepare($queryChamado);
+    
+            $stmtChamado->bindValue(":nm_titulo", $this->chamado->__get("nm_titulo"));
+            $stmtChamado->bindValue(":ds_categoria", $this->chamado->__get("ds_categoria"));
+            $stmtChamado->bindValue(":ds_chamado", $this->chamado->__get("ds_chamado"));
+            $stmtChamado->bindValue(":dt_chamado", $this->chamado->__get("dt_chamado"));
+            // Atribuindo à consulta de query o código de usuário
+            $stmtChamado->bindValue(":cd_usuario", $cdUsuarioRetorno[0]['cd_usuario']);
+    
+            $stmtChamado->execute();
+        } else {
+            header('Location: ../index.php?status=AUTH');
+        }        
     }
 
     public function recuperarChamados() {
@@ -63,23 +83,24 @@ class ChamadoService {
             // Verifica se existe um cd pra esse usuário
             
             if (count($cdUsuario)) {
-                $query = "select nm_titulo, ds_categoria, ds_chamado
+                $queryChamados = "select nm_titulo, ds_categoria, ds_chamado
                     from tb_chamados where cd_usuario = :cd_usuario";
                 // Preparando um statement com a query
-                $stmtChamados = $this->conexao->prepare($query);
+                $stmtChamados = $this->conexao->prepare($queryChamados);
 
                 // Pegando o usuário 
                 $stmtChamados->bindValue(":cd_usuario", $cdUsuario[0]['cd_usuario']);
             }
         } else {
             // Seleciona TUDO caso seja admin
-            $query = "select nm_titulo, ds_categoria, ds_chamado from tb_chamados";
+            $queryChamados = "select nm_titulo, ds_categoria, ds_chamado from tb_chamados";
             // Preparando um statement com a query
-            $stmtChamados = $this->conexao->prepare($query);
+            $stmtChamados = $this->conexao->prepare($queryChamados);
         }
-
+        
         // Executando PDOStatement
         $stmtChamados->execute();
+        
         // Buscando todos como objeto
         $arrTodosChamados = $stmtChamados->fetchAll(PDO::FETCH_ASSOC);
         
