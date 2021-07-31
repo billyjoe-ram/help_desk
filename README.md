@@ -3,12 +3,11 @@
 HelpDesk é uma aplicação simples criada para abrir chamados de ajuda sobre problemas envolvendo software, hardware e etc. para uma empresa, enquanto se aprende e pratica chamadas HTTP, formulários, componentização, estilização e interação com banco de dados utilizando a LAMP (Linux, Apache, MySQL e PHP) e funcionalidades modernas do desenvolvimento web (HTML5, CSS3, Bootstrap e JS). Sinta-se livre para clonar esse repositório, abrir PR's, issues, puxar forks e o que preferir.
 Escolhi, dessa vez, manter a maioria dos arquivos e códigos em português para alcançar mais facilmente, proporcionar acessibilidade e unir a comunidade de Devs que falam essa língua por todo o mundo, mas caso seja interesse da comunidade posso abrir um *branch* em inglês. ;)
 
-
-![Home HelpDesk](https://user-images.githubusercontent.com/67481026/127752984-cbc55dcf-83ee-4499-979a-9af2df521f4d.png)
 **Home**
+![Home HelpDesk](https://user-images.githubusercontent.com/67481026/127752984-cbc55dcf-83ee-4499-979a-9af2df521f4d.png)
 
-![Tela abrir chamados](https://user-images.githubusercontent.com/67481026/127753002-77d14667-9c42-4301-84d0-05ea121ababf.png)
 **Abrindo chamados**
+![Tela abrir chamados](https://user-images.githubusercontent.com/67481026/127753002-77d14667-9c42-4301-84d0-05ea121ababf.png)
 
 Aceito qualquer sugestão de como melhorar o projeto! :)
 
