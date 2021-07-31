@@ -4,7 +4,11 @@ HelpDesk é uma aplicação simples criada para abrir chamados de ajuda sobre pr
 Escolhi, dessa vez, manter a maioria dos arquivos e códigos em português para alcançar mais facilmente, proporcionar acessibilidade e unir a comunidade de Devs que falam essa língua por todo o mundo, mas caso seja interesse da comunidade posso abrir um *branch* em inglês. ;)
 
 
+![Home HelpDesk](https://user-images.githubusercontent.com/67481026/127752984-cbc55dcf-83ee-4499-979a-9af2df521f4d.png)
+**Home**
 
+![Tela abrir chamados](https://user-images.githubusercontent.com/67481026/127753002-77d14667-9c42-4301-84d0-05ea121ababf.png)
+**Abrindo chamados**
 
 Aceito qualquer sugestão de como melhorar o projeto! :)
 
@@ -17,7 +21,7 @@ Eu não implementei uma funcionalidade para criar usuários porque o intuíto é
 de usuários já existentes e maior foco nos chamados em si. Sinta-se livre para puxar o repositório, criar seus usuários e implementar essa funcionalidade com regras de negócio e métodos de segurança *OU* faça que nem eu e crie alguns usuários de teste no seu banco de dados.
 
 # Segurança e estrutura de diretórios
-Para facilitar visualização e compreensão do código, mantive arquivos privados e sensíveis aqui no repositório, mas o ideal é servir a aplicação sem essa pasta (private) em um nível não acessível.
+Para facilitar visualização e compreensão do código, mantive arquivos privados e sensíveis aqui no repositório, mas o ideal é servir a aplicação sem essa pasta (private) em um nível acessível.
 
 # Códigos de erro / retorno
 
